@@ -6,7 +6,7 @@ use App\Repository\TreeHouseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TreeHouseRepository::class)]
-class TreeHouse
+class TreeHouse extends Location
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

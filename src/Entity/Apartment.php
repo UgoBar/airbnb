@@ -6,7 +6,7 @@ use App\Repository\ApartmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApartmentRepository::class)]
-class Apartment
+class Apartment extends Location
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

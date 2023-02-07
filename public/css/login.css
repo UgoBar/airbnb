@@ -1,0 +1,14 @@
+
+.form-outline.form-white .form-control:focus ~ .form-label,
+.form-outline .form-control.active ~ .form-label {
+    background-color: #1a1b1d;
+}
+
+.form-outline.form-white .form-control {
+    border: 1px solid white;
+}
+
+.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: #1a1b1d !important;
+}

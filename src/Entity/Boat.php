@@ -6,7 +6,7 @@ use App\Repository\BoatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BoatRepository::class)]
-class Boat
+class Boat extends Location
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

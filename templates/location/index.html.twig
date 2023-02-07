@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Location{% endblock %}
+
+{% block body %}
+    <section class="index-location">
+        <h1>Ajouter un logement</h1>
+        <p>Choisir un type de logement</p>
+        <div class="add-locations">
+            <a class="btn btn-red" href="{{ path('app_add_house') }}"><i class="fa-solid fa-house-tsunami"></i> Maison</a>
+            <a class="btn btn-red" href="{{ path('app_add_apartment') }}"><i class="fa-solid fa-building"></i> Appartement</a>
+            <a class="btn btn-red" href="{{ path('app_add_treeHouse') }}"><i class="fa-solid fa-tree"></i> TreeHouse</a>
+            <a class="btn btn-red" href="{{ path('app_add_boat') }}"><i class="fa-solid fa-sailboat"></i> Bateau</a>
+        </div>
+    </section>
+{% endblock %}
