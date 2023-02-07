@@ -22,11 +22,14 @@
     {{ include('partials/_nav.html.twig') }}
 {% endblock %}
 
-<div class="container">
-    <div class="body-wrapper">
-        {% block body %}{% endblock %}
+{% block main_content %}
+    <div class="container">
+        <div class="body-wrapper">
+            {% block body %}{% endblock %}
+        </div>
     </div>
-</div>
+{% endblock %}
+
 
 {% block javascripts %}
     <script src="{{ asset('js/scripts.js') }}"></script>

@@ -46,7 +46,8 @@ class LocationController extends AbstractController
 
         return $this->render('location/form.html.twig', [
             'form' => $form,
-            'pageTitle' => 'Add House'
+            'locationType' => 'Maison',
+            'bannerImg' => 'https://img.freepik.com/photos-gratuite/piscine_74190-7325.jpg?w=1380&t=st=1675733370~exp=1675733970~hmac=82dda21a55ce6dc477282b4199cb6c1757a99d9adee62b9f01c607ee5854304d'
         ]);
     }
 
@@ -68,7 +69,8 @@ class LocationController extends AbstractController
 
         return $this->render('location/form.html.twig', [
             'form' => $form,
-            'pageTitle' => 'Add Apartment'
+            'locationType' => 'Appartement',
+            'bannerImg' => 'https://img.freepik.com/photos-gratuite/salon-chic-moderne-style-esthetique-luxe-dans-tons-gris_53876-132806.jpg?w=1380&t=st=1675733251~exp=1675733851~hmac=b890879ad9655882ff3c425bd52b2a50e4ad98eb85db82fd0829c23bffd73237'
         ]);
     }
 
@@ -90,12 +92,13 @@ class LocationController extends AbstractController
 
         return $this->render('location/form.html.twig', [
             'form' => $form,
-            'pageTitle' => 'Add Tree House'
+            'locationType' => 'Tree House',
+            'bannerImg' => 'https://a0.muscache.com/im/pictures/e8b004b9-1cf0-48fe-a7e1-085afdc19010.jpg?im_w=2560'
         ]);
     }
 
     // ADD BOAT
-    #[Route('/add/location/treeHouse', name: 'app_add_boat')]
+    #[Route('/add/location/boat', name: 'app_add_boat')]
     public function addBoat(Request $request, EntityManagerInterface $entityManager): Response
     {
         $location = new Boat();
@@ -112,7 +115,8 @@ class LocationController extends AbstractController
 
         return $this->render('location/form.html.twig', [
             'form' => $form,
-            'pageTitle' => 'Add Boat'
+            'locationType' => 'Bateau',
+            'bannerImg' => 'https://img.freepik.com/photos-gratuite/voilier-naviguant-dans-belle-riviere-foret-colline-escarpee_181624-739.jpg?w=1380&t=st=1675733504~exp=1675734104~hmac=c96a1c870d92b793ac824fe5de20296d858963b5f587748b582881c0cbe0572f'
         ]);
     }
 }

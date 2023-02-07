@@ -2,8 +2,50 @@
 
 {% block title %}Add Apartment{% endblock %}
 
-{% block body %}
-    {{ form_start(form) }}
-    <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
-    {{ form_end(form) }}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            margin-top: 73px;
+        }
+    </style>
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="banner">
+        <img src="{{ bannerImg }}" alt="">
+        <h1 class="location-form-title">Ajouter votre {{ locationType }}</h1>
+    </div>
+
+    <div class="form">
+
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
+    <script>
+
+        const navbar = document.getElementById('mainNav');
+        const avatarButton = document.querySelector('.nav-link.dropdown-toggle')
+
+        window.onscroll = () => {
+            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+
+            if(scrollPosition > 100) {
+                navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'
+                avatarButton.style.borderColor = 'black'
+            } else {
+                navbar.style.backgroundColor = 'unset'
+                avatarButton.style.borderColor = '#acafb1'
+
+            }
+        }
+
+    </script>
 {% endblock %}

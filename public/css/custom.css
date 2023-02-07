@@ -74,3 +74,37 @@ h1 {
 .add-locations .btn-red {
     margin: 20px 10px 0 10px;
 }
+
+.banner {
+    height: fit-content;
+    position: relative;
+}
+.banner img {
+    height: 600px;
+    width: 100%;
+    object-fit: cover;
+}
+.location-form-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translateX(-50%);
+    font-size: 50px;
+    text-shadow: 3px 1px 19px black;
+}
+
+.form {
+    width: 700px;
+    margin: 3em auto;
+}
+#boat_submit {
+    display: block;
+    margin-left: auto;
+}
+
+
+/** TRANSITIONS **/
+.nav-link.dropdown-toggle, #mainNav {
+    transition: all .1s ease-in-out;
+}
