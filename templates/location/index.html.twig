@@ -20,12 +20,11 @@
 
     <script>
 
-        const userMail = '{{ app.user.email }}';
+        const isUser = '{{ app.user.email is defined ? true : false }}';
         const links = document.querySelectorAll('.add-locations a');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
-                let linkHref = link.getAttribute("href");
-                if(userMail === '') {
+                if(isUser === '') {
                     e.preventDefault();
                     Swal.fire({
                         title: `Pour créer un logement vous devez vous connecter`,
@@ -34,7 +33,7 @@
                     }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
-                            window.location.replace(linkHref);
+                            window.location.replace('{{ path('app_login') }}');
                         }
                     })
                 }
