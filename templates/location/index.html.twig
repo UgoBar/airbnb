@@ -14,3 +14,43 @@
         </div>
     </section>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        const userMail = '{{ app.user.email }}';
+        const links = document.querySelectorAll('.add-locations a');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                let linkHref = link.getAttribute("href");
+                if(userMail === '') {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: `Pour créer un logement vous devez vous connecter`,
+                        showCancelButton: true,
+                        confirmButtonText: 'Se connecter',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            window.location.replace(linkHref);
+                        }
+                    })
+                }
+            })
+        })
+
+        {#Swal.fire({#}
+        {#    title: `Pour créer un logement vous devez vous connecter`,#}
+        {#    showCancelButton: true,#}
+        {#    confirmButtonText: 'Se connecter',#}
+        {#}).then((result) => {#}
+        {#    /* Read more about isConfirmed, isDenied below */#}
+        {#    if (result.isConfirmed) {#}
+        {#        const loginURL = '{{ path('app_login') }}'#}
+        {#    }#}
+        {#})#}
+
+    </script>
+{% endblock %}

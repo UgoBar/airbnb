@@ -47,5 +47,26 @@
             }
         }
 
+        const user = {{ app.user is defined }};
+        console.log(user);
+        const links = document.querySelectorAll('.add-locations a');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('hello');
+            })
+        })
+
+        {#Swal.fire({#}
+        {#    title: `Pour créer un logement vous devez vous connecter`,#}
+        {#    showCancelButton: true,#}
+        {#    confirmButtonText: 'Se connecter',#}
+        {#}).then((result) => {#}
+        {#    /* Read more about isConfirmed, isDenied below */#}
+        {#    if (result.isConfirmed) {#}
+        {#        const loginURL = '{{ path('app_login') }}'#}
+        {#    }#}
+        {#})#}
+
     </script>
 {% endblock %}
