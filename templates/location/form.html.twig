@@ -28,45 +28,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
-    <script>
-
-        const navbar = document.getElementById('mainNav');
-        const avatarButton = document.querySelector('.nav-link.dropdown-toggle')
-
-        window.onscroll = () => {
-            let scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
-
-            if(scrollPosition > 100) {
-                navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'
-                avatarButton.style.borderColor = 'black'
-            } else {
-                navbar.style.backgroundColor = 'unset'
-                avatarButton.style.borderColor = '#acafb1'
-
-            }
-        }
-
-        const user = {{ app.user is defined }};
-        console.log(user);
-        const links = document.querySelectorAll('.add-locations a');
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('hello');
-            })
-        })
-
-        {#Swal.fire({#}
-        {#    title: `Pour créer un logement vous devez vous connecter`,#}
-        {#    showCancelButton: true,#}
-        {#    confirmButtonText: 'Se connecter',#}
-        {#}).then((result) => {#}
-        {#    /* Read more about isConfirmed, isDenied below */#}
-        {#    if (result.isConfirmed) {#}
-        {#        const loginURL = '{{ path('app_login') }}'#}
-        {#    }#}
-        {#})#}
-
-    </script>
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+    {{ encore_entry_script_tags('form') }}
 {% endblock %}
