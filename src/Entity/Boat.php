@@ -4,14 +4,11 @@ namespace App\Entity;
 
 use App\Repository\BoatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BoatRepository::class)]
 class Boat extends Location
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $roofHeight = null;
@@ -21,11 +18,6 @@ class Boat extends Location
 
     #[ORM\Column]
     private ?bool $isMoving = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getRoofHeight(): ?float
     {

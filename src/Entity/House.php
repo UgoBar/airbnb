@@ -8,10 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: HouseRepository::class)]
 class House extends Location
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column]
     private ?bool $hasGarage = null;
@@ -21,11 +17,6 @@ class House extends Location
 
     #[ORM\Column]
     private ?bool $hasPool = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function isHasGarage(): ?bool
     {

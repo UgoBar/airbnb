@@ -17,35 +17,44 @@ class Location
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    protected ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    protected ?string $description = null;
 
     #[ORM\Column]
-    private ?int $capacity = null;
+    protected ?int $capacity = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $address = null;
+    protected ?string $address = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+    protected ?string $phone = null;
 
     #[ORM\Column]
-    private ?int $nbrRoom = null;
+    protected ?int $nbrRoom = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $priceOneNight = null;
+    protected ?string $priceOneNight = null;
 
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    protected ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Booking::class)]
-    private Collection $booking;
+    protected Collection $booking;
+
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $latitude = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $longitude = null;
 
     public function __construct()
     {
@@ -179,6 +188,42 @@ class Location
                 $booking->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(string $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }

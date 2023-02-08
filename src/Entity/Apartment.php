@@ -8,21 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ApartmentRepository::class)]
 class Apartment extends Location
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $floor = null;
 
     #[ORM\Column]
     private ?bool $isDuplex = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getFloor(): ?int
     {

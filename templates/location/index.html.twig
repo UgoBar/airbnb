@@ -27,29 +27,18 @@
                 if(isUser === '') {
                     e.preventDefault();
                     Swal.fire({
-                        title: `Pour créer un logement vous devez vous connecter`,
+                        text: `Pour créer un logement vous devez vous connecter`,
                         showCancelButton: true,
                         confirmButtonText: 'Se connecter',
                     }).then((result) => {
                         /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
-                            window.location.replace('{{ path('app_login') }}');
+                            window.location.replace(link.getAttribute('href'));
                         }
                     })
                 }
             })
         })
-
-        {#Swal.fire({#}
-        {#    title: `Pour créer un logement vous devez vous connecter`,#}
-        {#    showCancelButton: true,#}
-        {#    confirmButtonText: 'Se connecter',#}
-        {#}).then((result) => {#}
-        {#    /* Read more about isConfirmed, isDenied below */#}
-        {#    if (result.isConfirmed) {#}
-        {#        const loginURL = '{{ path('app_login') }}'#}
-        {#    }#}
-        {#})#}
 
     </script>
 {% endblock %}
