@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 #[ORM\InheritanceType("JOINED")]
@@ -50,11 +51,19 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $latitude = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $longitude = null;
+
+    #[ORM\Column(length: 400, nullable: true)]
+    private ?string $picture = null;
+
+    public function getClassName(){
+        $class = new ReflectionClass($this);
+        return $class->getShortName();
+    }
 
     public function __construct()
     {
@@ -224,6 +233,18 @@ class Location
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

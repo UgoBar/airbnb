@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Location{% endblock %}
+
+{% block body %}
+
+    <h1>Mes logements</h1>
+    <p>Retrouvez ici la liste de tous vos logements</p>
+    <a class="btn btn-red mb-5" href="{{ path('app_add_location') }}">Ajouter un logement</a>
+
+    <div class="row">
+        {% for location in locations %}
+            <div class="card card-list">
+                <img src="{{ location.picture }}" alt="">
+                <h2>{{ location.name }}</h2>
+                <span class="badge rounded-pill bg-success">En cours</span>
+                <p>Catégorie : {{ location.className }}</p>
+                <div class="cta">
+                    <a class="btn btn-secondary rounded" href="{{ path('app_update_location', {'id':location.id}) }}"><i class="fa-solid fa-pencil"></i></a>
+                    <a class="btn btn-primary rounded" href="{{ path('app_add_location_room', {'id':location.id}) }}"><i class="fa-solid fa-bed"></i></a>
+                    <a class="btn btn-danger rounded" href="#" data-href="{{ path('app_delete_location', {'id':location.id}) }}" onclick="deleteLocation(this, {{ location.id }}, '{{ location.name }}')"><i class="fa-solid fa-xmark"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        function deleteLocation(elem, locationId, name) {
+            Swal.fire({
+                text: `Voulez-vous vraiment supprimer ${name} ?`,
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    window.location.replace(elem.dataset.href);
+                }
+            })
+        }
+    </script>
+{% endblock %}

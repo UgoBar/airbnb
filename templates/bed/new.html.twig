@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Bed{% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <style>
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+        button {
+            width: fit-content;
+            margin: auto;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_bed_index') }}">Retour</a>
+    <h1 class="text-center mb-3">Créer</h1>
+
+    {{ include('bed/_form.html.twig') }}
+
+{% endblock %}

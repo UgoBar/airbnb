@@ -27,6 +27,33 @@ class LocationController extends AbstractController
         return $this->render('location/index.html.twig', []);
     }
 
+    #[Route('/my/locations', name: 'app_list_my_location')]
+    public function list(Request $request, LocationRepository $locationRepository): Response
+    {
+        $user = $this->getUser();
+        $locations = $locationRepository->findBy(['user' => $user]);
+        return $this->render('location/list.html.twig', [
+            'locations' => $locations
+        ]);
+    }
+
+    #[Route('/delete/location/{id}', name: 'app_delete_location', methods: ['GET', 'POST'])]
+    public function deleteLocation(Request $request, EntityManagerInterface $entityManager, LocationRepository $locationRepository, Location $location)
+    {
+        $locationRepository->remove($location, true);
+        return $this->redirectToRoute('app_list_my_location');
+    }
+
+    #[Route('/add/location/room/{id}', name: 'app_add_location_room', methods: ['GET', 'POST'])]
+    public function addLocationRoom(Request $request, Location $location)
+    {
+
+
+        return $this->render('location/addRoom.html.twig', [
+            'location' => $location
+        ]);
+    }
+
     #[Route('/add/location/house', name: 'app_add_house')]
     #[Route('/add/location/apartment', name: 'app_add_apartment')]
     #[Route('/add/location/boat', name: 'app_add_boat')]
@@ -77,7 +104,7 @@ class LocationController extends AbstractController
             $location->setUser($this->getUser());
             $entityManager->persist($location);
             $entityManager->flush();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_list_my_location');
         }
 
 
@@ -98,19 +125,19 @@ class LocationController extends AbstractController
 
         if($className === 'House') {
             $locationType = 'Maison';
-            $bannerImg = 'https://img.freepik.com/photos-gratuite/piscine_74190-7325.jpg?w=1380&t=st=1675733370~exp=1675733970~hmac=82dda21a55ce6dc477282b4199cb6c1757a99d9adee62b9f01c607ee5854304d';
+            $bannerImg = $location->getPicture() ?: 'https://img.freepik.com/photos-gratuite/piscine_74190-7325.jpg?w=1380&t=st=1675733370~exp=1675733970~hmac=82dda21a55ce6dc477282b4199cb6c1757a99d9adee62b9f01c607ee5854304d';
         }
         else if($className === 'Apartment') {
             $locationType = 'Appartement';
-            $bannerImg = 'https://img.freepik.com/photos-gratuite/salon-chic-moderne-style-esthetique-luxe-dans-tons-gris_53876-132806.jpg?w=1380&t=st=1675733251~exp=1675733851~hmac=b890879ad9655882ff3c425bd52b2a50e4ad98eb85db82fd0829c23bffd73237';
+            $bannerImg = $location->getPicture() ?: 'https://img.freepik.com/photos-gratuite/salon-chic-moderne-style-esthetique-luxe-dans-tons-gris_53876-132806.jpg?w=1380&t=st=1675733251~exp=1675733851~hmac=b890879ad9655882ff3c425bd52b2a50e4ad98eb85db82fd0829c23bffd73237';
         }
         else if($className === 'Boat') {
             $locationType = 'Bateau';
-            $bannerImg = 'https://img.freepik.com/photos-gratuite/voilier-naviguant-dans-belle-riviere-foret-colline-escarpee_181624-739.jpg?w=1380&t=st=1675733504~exp=1675734104~hmac=c96a1c870d92b793ac824fe5de20296d858963b5f587748b582881c0cbe0572f';
+            $bannerImg = $location->getPicture() ?: 'https://img.freepik.com/photos-gratuite/voilier-naviguant-dans-belle-riviere-foret-colline-escarpee_181624-739.jpg?w=1380&t=st=1675733504~exp=1675734104~hmac=c96a1c870d92b793ac824fe5de20296d858963b5f587748b582881c0cbe0572f';
         }
         else {
             $locationType = 'Tree House';
-            $bannerImg = 'https://a0.muscache.com/im/pictures/e8b004b9-1cf0-48fe-a7e1-085afdc19010.jpg?im_w=2560';
+            $bannerImg = $location->getPicture() ?: 'https://a0.muscache.com/im/pictures/e8b004b9-1cf0-48fe-a7e1-085afdc19010.jpg?im_w=2560';
         }
 
 
@@ -120,7 +147,7 @@ class LocationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($location);
             $entityManager->flush();
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_list_my_location');
         }
 
         return $this->render('location/form.html.twig', [

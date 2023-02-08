@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -35,7 +35,7 @@ tinymce.init({
 
 
 /** -------- AUTO COMPLETE -------- **/
-const cityInput = document.getElementById("apartment_city")
+const cityInput = document.querySelector("#city input")
 const datalist = document.createElement("datalist")
 
 datalist.id = "cityList";
@@ -43,27 +43,23 @@ cityInput.parentElement.append(datalist);
 
 // Listener on city input
 cityInput.addEventListener("input", function() {
+    cityInput.setAttribute('list', 'cityList')
     if(cityInput.value.length > 2) {
         fetch(`${apiURL}/${cityInput.value}`)
             .then( response => response.json() )
             .then( json => {
                 datalist.innerHTML = '';
-                datalist.style.display = 'block';
                 for(const option of json) {
                     const optionNode = document.createElement("option");
                     optionNode.value = option.ville_nom;
                     optionNode.innerHTML = `<div class="option-title">${option.ville_nom}</div><div class="option-content">${option.ville_nom_reel} (${option.ville_code_postal})</div>`;
                     datalist.appendChild(optionNode);
-                    optionNode.addEventListener('click', function() {
-                        cityInput.value = optionNode.value;
-                        datalist.style.display = 'none';
-                    })
                 }
             })
     }
 })
 
-cityInput.addEventListener("focusout", function() {
-    datalist.style.display = 'none';
+document.querySelector('.btn.btn-red').addEventListener('click', () => {
+    document.querySelector('form').submit();
 })
 /** -------- END AUTO COMPLETE -------- **/

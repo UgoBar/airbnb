@@ -24,6 +24,9 @@ class Bed
     #[ORM\OneToMany(mappedBy: 'bed', targetEntity: RoomBed::class)]
     private Collection $roomBeds;
 
+    #[ORM\Column(length: 400, nullable: true)]
+    private ?string $picture = null;
+
     public function __construct()
     {
         $this->roomBeds = new ArrayCollection();
@@ -84,6 +87,18 @@ class Bed
                 $roomBed->setBed(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
