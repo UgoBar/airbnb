@@ -137,3 +137,37 @@ form>div:nth-of-type(9), form>div:nth-of-type(10), form>div:nth-of-type(11) {
 .nav-link.dropdown-toggle, #mainNav {
     transition: all .1s ease-in-out;
 }
+
+
+datalist {
+    position: absolute;
+    max-height: 16em;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow-x: auto;
+    z-index: 100;
+    box-shadow: 0px 18px 22px -7px rgba(0,0,0,0.75);
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+}
+datalist option {
+    font-size: 0.8em;
+    padding: 0.3em 1em;
+    background-color: #fff;
+    cursor: pointer;
+    border-top: 1px solid #e4e4e4;
+}
+.option-title {
+    font-size: 115%;
+    color: #b5b5b5;
+}
+.option-content {
+    font-weight: bold;
+    font-size: 102%;
+}
+/* option active styles */
+datalist option:hover, datalist option:focus, datalist option:hover .option-title {
+    color: #fff;
+    background-color: #ff6066;
+    outline: 0 none;
+}

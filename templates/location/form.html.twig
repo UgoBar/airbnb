@@ -29,5 +29,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datalist-css/dist/datalist-css.min.js"></script>
+    <script>
+        const apiURL = '{{ path('app_api_get_city') }}'
+    </script>
+
     {{ encore_entry_script_tags('form') }}
 {% endblock %}

@@ -55,6 +55,7 @@ class LocationType extends AbstractType
                 'label' => 'Ville',
                 'attr' => [
                     'placeholder' => 'Ville',
+                    'list' => 'cityList'
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',

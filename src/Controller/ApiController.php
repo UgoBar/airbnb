@@ -14,13 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractController
 {
     #[Security("is_granted('ROLE_USER')")]
-    #[Route('/api/get/city/{term}', name: 'app_api')]
-    public function index(string $term, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/api/get/city/{term}', name: 'app_api_get_city')]
+    public function index(EntityManagerInterface $entityManager, ?string $term = null): Response
     {
-        $conn = $entityManager->getConnection();
-        $sql = 'SELECT ville_departement, ville_nom_reel, ville_code_postal FROM spec_villes_france WHERE ville_nom_reel LIKE :term';
-        $result = $conn->prepare($sql)->executeQuery(['term' => '%'.$term.'%'])->fetchAllAssociative();
+        if($term !== null) {
+            $conn = $entityManager->getConnection();
+            $sql = 'SELECT ville_nom, ville_nom_reel, ville_code_postal FROM spec_villes_france WHERE ville_nom_reel LIKE :term';
+            $result = $conn->prepare($sql)->executeQuery(['term' => '%'.$term.'%'])->fetchAllAssociative();
 
-        return new JsonResponse($result);
+            return new JsonResponse($result);
+        }
+        return new JsonResponse('Aucune ville trouvée');
     }
 }
