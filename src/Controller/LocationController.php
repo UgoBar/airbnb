@@ -6,10 +6,13 @@ use App\Entity\Apartment;
 use App\Entity\Boat;
 use App\Entity\House;
 use App\Entity\Location;
+use App\Entity\Room;
 use App\Entity\TreeHouse;
 use App\Form\ApartmentType;
 use App\Form\BoatType;
 use App\Form\HouseType;
+use App\Form\InitRoomType;
+use App\Form\RoomType;
 use App\Form\TreeHouseType;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,18 +41,62 @@ class LocationController extends AbstractController
     }
 
     #[Route('/delete/location/{id}', name: 'app_delete_location', methods: ['GET', 'POST'])]
-    public function deleteLocation(Request $request, EntityManagerInterface $entityManager, LocationRepository $locationRepository, Location $location)
+    public function deleteLocation(Request $request, LocationRepository $locationRepository, Location $location): Response
     {
         $locationRepository->remove($location, true);
         return $this->redirectToRoute('app_list_my_location');
     }
 
+
     #[Route('/add/location/room/{id}', name: 'app_add_location_room', methods: ['GET', 'POST'])]
-    public function addLocationRoom(Request $request, Location $location)
+    public function addLocationRoom(Request $request, Location $location, EntityManagerInterface $entityManager): Response
     {
 
+        $room = new Room();
+        $nbrRooms = $location->getNbrRoom();
 
-        return $this->render('location/addRoom.html.twig', [
+        $form = $this->createForm(RoomType::class, $room);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach($form->getData()->getroomBeds() as $roomBed) {
+                $roomBed->setRoom($room);
+            }
+
+            $room->setLocation($location);
+            $entityManager->persist($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_list_my_location');
+        }
+
+        return $this->render('location/add_room.html.twig', [
+            'form' => $form,
+            'location' => $location
+        ]);
+    }
+
+    #[Route('/location/{id}/rooms', name: 'location_rooms', methods: ['GET', 'POST'])]
+    public function locationRooms(Request $request, Location $location, EntityManagerInterface $entityManager)
+    {
+
+        $form = $this->createForm(InitRoomType::class, $location);
+        $form->handleRequest($request);
+
+//        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
+            dd($form->getData());
+//            foreach($form->getData()->getroomBeds() as $roomBed) {
+//                $roomBed->setRoom($room);
+//            }
+
+            $entityManager->persist($location);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_list_my_location');
+        }
+
+        return $this->render('location/rooms.html.twig', [
+            'form' => $form,
             'location' => $location
         ]);
     }
@@ -59,7 +106,7 @@ class LocationController extends AbstractController
     #[Route('/add/location/boat', name: 'app_add_boat')]
     #[Route('/add/location/treeHouse', name: 'app_add_treeHouse')]
     #[Security("is_granted('ROLE_USER')")]
-    public function addLocation(Request $request, EntityManagerInterface $entityManager)
+    public function addLocation(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $formType = null;
@@ -102,9 +149,21 @@ class LocationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $location->setUser($this->getUser());
+
+            // Ajouter X chambres
+            for($i = 0; $i < $form->getData()->getNbrRoom(); $i++) {
+                $room = new Room();
+                $room->setLocation($location);
+                $room->setHasBalcony(0);
+                $room->setHasBathroom(0);
+                $entityManager->persist($room);
+            }
+
             $entityManager->persist($location);
             $entityManager->flush();
-            return $this->redirectToRoute('app_list_my_location');
+
+//            return $this->redirectToRoute('app_list_my_location');
+            return $this->redirectToRoute('location_rooms', ['id' => $location->getId()]);
         }
 
 
@@ -117,7 +176,7 @@ class LocationController extends AbstractController
 
     #[Route('/update/location/{id}', name: 'app_update_location', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_USER')")]
-    public function updateLocation(Request $request, Location $location, EntityManagerInterface $entityManager)
+    public function updateLocation(Request $request, Location $location, EntityManagerInterface $entityManager): Response
     {
 
         $className = substr(get_class($location), strrpos(get_class($location), '\\') + 1);
@@ -145,6 +204,28 @@ class LocationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+//            // Update room number
+//            if($location->getNbrRoom() != count($form->getData()->getNbrRoom())) {
+//                // More ?
+//                if($location->getNbrRoom() < count($form->getData()->getNbrRoom())) {
+//                    $diff = count($form->getData()->getNbrRoom()) - $location->getNbrRoom();
+//                    // Add X rooms
+//                    for($i = 0; $i < $diff; $i++) {
+//                        $room = new Room();
+//                        $room->setLocation($location);
+//                        $room->setHasBalcony(0);
+//                        $room->setHasBathroom(0);
+//                        $entityManager->persist($room);
+//                    }
+//                } else {  // Less ?
+//                    $diff = $location->getNbrRoom() - count($form->getData()->getNbrRoom());
+//                    // Delete X rooms
+//
+//                }
+//
+//            }
+
             $entityManager->persist($location);
             $entityManager->flush();
             return $this->redirectToRoute('app_list_my_location');

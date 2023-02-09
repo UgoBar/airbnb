@@ -21,8 +21,11 @@ class Room
     #[ORM\Column]
     private ?bool $hasBalcony = null;
 
-    #[ORM\OneToMany(mappedBy: 'room', targetEntity: RoomBed::class)]
+    #[ORM\OneToMany(mappedBy: 'room', targetEntity: RoomBed::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $roomBeds;
+
+    #[ORM\ManyToOne(inversedBy: 'rooms')]
+    private ?Location $location = null;
 
     public function __construct()
     {
@@ -84,6 +87,18 @@ class Room
                 $roomBed->setRoom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

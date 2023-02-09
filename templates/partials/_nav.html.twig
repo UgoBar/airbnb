@@ -9,6 +9,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center pe-3">
+                    <i class="fa-solid fa-users pe-2"></i>
+                    <div class="input-number">
+                        <button type="button" onclick="decrement()" >&minus;</button>
+                        <span id="travellerNumber">0</span>
+                        <button type="button" onclick="increment()">&#43;</button>
+                    </div>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center">
+                    <i class="fa-regular fa-calendar pe-2"></i> <input type="text" id="dateRange" class="form-control form-control-sm" placeholder="Select a date">
+                </li>
                 <li class="nav-item mx-0 mx-lg-1">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Rechercher</a>
                 </li>

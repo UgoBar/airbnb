@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Apartment{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        form > div {
+            width: unset;
+            margin: unset;
+        }
+        form > div:nth-of-type(1) {
+            width: 20%;
+        }
+        form > div:nth-of-type(2) {
+            width: 80%;
+        }
+    </style>
+{% endblock %}
+
+{% block main_content %}
+
+    <h1 class="text-center mb-3">Ajouter une chambre</h1>
+    <h2 class="text-center">{{ location.name }}</h2>
+
+    <div class="form">
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.hasBathroom) }}
+        {{ form_row(form.hasBalcony) }}
+
+
+        <section>
+            <div class="d-flex align-items-center mb-3">
+                <h3 class="me-3">Ajouter des lits</h3>
+                <button class="btn btn-dark rounded add_item" type="button" id="addBed" data-collection-holder-class="roomBeds"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div class="roomBeds" id="roomBeds"
+                 data-index="{{ form.roomBeds|length > 0 ? form.roomBeds|last.vars.name + 1 : 0 }}"
+                    {#            data-template='{{ form_widget(form.roomBeds.vars.prototype)|e('html_attr') }}'>#}
+                 data-template='{{ form_widget(form.roomBeds.vars.prototype) }} <a class="btn btn-dark rounded remove-item" href="#"><i class="fa-solid fa-minus"></i></button>'
+            >
+            </div>
+            <button type="submit" class="btn btn-red">Enregistrer</button>
+            {{ form_widget(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('form') }}
+    <script>
+
+
+    </script>
+{% endblock %}

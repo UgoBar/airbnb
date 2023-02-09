@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Apartment{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        form > div {
+            width: unset;
+            margin: unset;
+        }
+        form > div:nth-of-type(1) {
+            width: 20%;
+        }
+        form > div:nth-of-type(2) {
+            width: 80%;
+        }
+    </style>
+{% endblock %}
+
+{% block main_content %}
+
+    <h1 class="text-center mb-3">Ajouter une chambre</h1>
+    <h2 class="text-center">{{ location.name }}</h2>
+
+    <div class="form">
+
+        {{ form_start(form) }}
+
+
+        {% for room in form.rooms %}
+            <section class="card">
+                <h3 class="mb-4">Chambre {{ loop.index }}</h3>
+                <div class="checkboxes">
+                    {{ form_row(room.hasBathroom) }}
+                    {{ form_row(room.hasBalcony) }}
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <h5 class="mb-2">Ajouter des lits</h5>
+                    <button class="btn btn-dark rounded add_item" type="button" onclick="addFormToCollection('roomBeds-{{ room.vars.value.id }}')" data-collection-holder-class="roomBeds"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="roomBeds" id="roomBeds-{{ room.vars.value.id }}"
+                     data-index="{{ room.roomBeds|length > 0 ? room.roomBeds|last.vars.name + 1 : 0 }}"
+{#                     data-template='{{ form_widget(form.roomBeds.vars.prototype)|e('html_attr') }}'>#}
+                    data-template='{{ form_widget(room.roomBeds.vars.prototype) }} <a class="btn btn-dark rounded remove-item" href="#"><i class="fa-solid fa-minus"></i></a>'>
+
+                    {% for roomBed in room.roomBeds %}
+                        <div class="collection-item">
+                            <div>
+                                {{ form_row(roomBed.bed) }}
+                                {{ form_row(roomBed.quantity) }}
+                            </div>
+                            <a class="btn btn-dark rounded remove-item" href="#"><i class="fa-solid fa-minus"></i></a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </section>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-red">Enregistrer</button>
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('form') }}
+    <script>
+        // const roomBeds = document.getElementById('roomBeds');
+        // const addBed = document.getElementById('addBed');
+
+        function addFormToCollection(roomBedsId) {
+            const roomBeds = document.getElementById(roomBedsId);
+            const item = document.createElement('div');
+
+            item.innerHTML = roomBeds.dataset.template.replaceAll('__name__', roomBeds.dataset.index);
+
+            item.classList.add('collection-item');
+
+            roomBeds.appendChild(item);
+            roomBeds.dataset.index++;
+
+            item.querySelector('.remove-item').addEventListener('click', (e) => {
+                item.remove();
+            });
+        }
+
+        document.querySelectorAll('.remove-item').forEach(elem => {
+            elem.addEventListener('click', function() {
+                this.closest('.collection-item').remove()
+            })
+        })
+
+        // addBed.addEventListener('click', addFormToCollection);
+    </script>
+{% endblock %}

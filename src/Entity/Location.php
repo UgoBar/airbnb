@@ -60,6 +60,9 @@ class Location
     #[ORM\Column(length: 400, nullable: true)]
     private ?string $picture = null;
 
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Room::class)]
+    private Collection $rooms;
+
     public function getClassName(){
         $class = new ReflectionClass($this);
         return $class->getShortName();
@@ -68,6 +71,7 @@ class Location
     public function __construct()
     {
         $this->booking = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,6 +249,36 @@ class Location
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Room>
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms->add($room);
+            $room->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        if ($this->rooms->removeElement($room)) {
+            // set the owning side to null (unless already changed)
+            if ($room->getLocation() === $this) {
+                $room->setLocation(null);
+            }
+        }
 
         return $this;
     }
