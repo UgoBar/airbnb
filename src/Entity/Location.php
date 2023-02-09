@@ -26,9 +26,6 @@ class Location
     #[ORM\Column(type: Types::TEXT)]
     protected ?string $description = null;
 
-    #[ORM\Column]
-    protected ?int $capacity = null;
-
     #[ORM\Column(length: 255)]
     protected ?string $address = null;
 
@@ -105,14 +102,13 @@ class Location
 
     public function getCapacity(): ?int
     {
-        return $this->capacity;
-    }
-
-    public function setCapacity(int $capacity): self
-    {
-        $this->capacity = $capacity;
-
-        return $this;
+        $capacity = 0;
+        foreach ($this->getRooms() as $room) {
+            foreach ($room->getRoomBeds() as $roomBed) {
+                $capacity += $roomBed->getBed()->getCapacity() * $roomBed->getQuantity();
+            }
+        }
+        return $capacity;
     }
 
     public function getAddress(): ?string

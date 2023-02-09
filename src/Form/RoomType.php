@@ -23,6 +23,7 @@ class RoomType extends AbstractType
                 'by_reference' => false,
                 "label"=>false,
                 'allow_add' => true,
+                'allow_delete' => true,
 //                'entry_options' => [
 //                    'attr' => ['class' => 'email-box'],
 //                ],

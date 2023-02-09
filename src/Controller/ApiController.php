@@ -27,4 +27,18 @@ class ApiController extends AbstractController
         }
         return new JsonResponse('Aucune ville trouvée');
     }
+
+    #[Route('/api/get/location', name: 'app_search_location')]
+    public function searchLocation(Request $request)
+    {
+//        $dateRange =
+//        if()
+
+        $params = [
+            'capacity' => $request->get('capacity') ?: 0,
+            'startAt'  => $request->get('dateRange') ?: null,
+            'endAt'    => $request->get('endAt') ?: null,
+            'city'     => $request->get('city') ?: null,
+        ];
+    }
 }

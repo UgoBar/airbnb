@@ -11,7 +11,7 @@ use App\Entity\TreeHouse;
 use App\Form\ApartmentType;
 use App\Form\BoatType;
 use App\Form\HouseType;
-use App\Form\InitRoomType;
+use App\Form\RoomCollectionType;
 use App\Form\RoomType;
 use App\Form\TreeHouseType;
 use App\Repository\LocationRepository;
@@ -47,45 +47,14 @@ class LocationController extends AbstractController
         return $this->redirectToRoute('app_list_my_location');
     }
 
-
-    #[Route('/add/location/room/{id}', name: 'app_add_location_room', methods: ['GET', 'POST'])]
-    public function addLocationRoom(Request $request, Location $location, EntityManagerInterface $entityManager): Response
-    {
-
-        $room = new Room();
-        $nbrRooms = $location->getNbrRoom();
-
-        $form = $this->createForm(RoomType::class, $room);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            foreach($form->getData()->getroomBeds() as $roomBed) {
-                $roomBed->setRoom($room);
-            }
-
-            $room->setLocation($location);
-            $entityManager->persist($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_list_my_location');
-        }
-
-        return $this->render('location/add_room.html.twig', [
-            'form' => $form,
-            'location' => $location
-        ]);
-    }
-
     #[Route('/location/{id}/rooms', name: 'location_rooms', methods: ['GET', 'POST'])]
     public function locationRooms(Request $request, Location $location, EntityManagerInterface $entityManager)
     {
 
-        $form = $this->createForm(InitRoomType::class, $location);
+        $form = $this->createForm(RoomCollectionType::class, $location);
         $form->handleRequest($request);
 
-//        if ($form->isSubmitted() && $form->isValid()) {
-        if ($form->isSubmitted()) {
-            dd($form->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
 //            foreach($form->getData()->getroomBeds() as $roomBed) {
 //                $roomBed->setRoom($room);
 //            }

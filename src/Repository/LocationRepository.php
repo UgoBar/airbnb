@@ -39,6 +39,20 @@ class LocationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLocationByCapacity(int $capacity)
+    {
+        return $this->createQueryBuilder('l')
+            ->join('l.rooms', 'r')
+            ->join('r.roomBeds', 'rb')
+            ->join('rb.bed', 'b')
+            ->groupBy('l')
+            ->having('SUM(b.capacity * rb.quantity) >= :capacity')
+            ->setParameter('capacity', $capacity)
+//            ->setMaxResults(10)
+            ->getQuery()->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Location[] Returns an array of Location objects
 //     */

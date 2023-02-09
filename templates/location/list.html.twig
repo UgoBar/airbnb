@@ -11,10 +11,13 @@
     <div class="row">
         {% for location in locations %}
             <div class="card card-list">
-                <img src="{{ location.picture }}" alt="">
+                <figure>
+                    <img src="{{ location.picture }}" alt="">
+                </figure>
                 <h2>{{ location.name }}</h2>
                 <span class="badge rounded-pill bg-success">En cours</span>
-                <p>Catégorie : {{ location.className }}</p>
+                <span class="btn btn-dark rounded"><i class="fa-solid fa-person-walking-luggage"></i>{{ location.capacity }}</span>
+                <p class="mb-0">Catégorie : {{ location.className }}</p>
                 <div class="cta">
                     <a class="btn btn-secondary rounded" href="{{ path('app_update_location', {'id':location.id}) }}"><i class="fa-solid fa-pencil"></i></a>
                     <a class="btn btn-primary rounded" href="{{ path('location_rooms', {'id':location.id}) }}"><i class="fa-solid fa-bed"></i></a>

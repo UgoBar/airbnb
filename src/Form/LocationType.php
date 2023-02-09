@@ -55,15 +55,15 @@ class LocationType extends AbstractType
                     'placeholder' => 'Description',
                 ],
             ])
-            ->add('capacity', NumberType::class, [
-                'label' => "Capacité d'accueil",
-                'attr' => [
-                    'placeholder' => "Capacité d'accueil",
-                ],
-                'row_attr' => [
-                    'class' => 'form-floating',
-                ],
-            ])
+//            ->add('capacity', NumberType::class, [
+//                'label' => "Capacité d'accueil",
+//                'attr' => [
+//                    'placeholder' => "Capacité d'accueil",
+//                ],
+//                'row_attr' => [
+//                    'class' => 'form-floating',
+//                ],
+//            ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
                 'attr' => [

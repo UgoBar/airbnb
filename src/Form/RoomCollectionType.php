@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InitRoomType extends AbstractType
+class RoomCollectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -20,6 +20,8 @@ class InitRoomType extends AbstractType
                 'entry_type' => RoomType::class,
                 'by_reference' => false,
                 "label" => false,
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
         ;
     }
