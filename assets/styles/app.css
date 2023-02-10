@@ -4,9 +4,11 @@
 .navbar-expand-lg .navbar-nav {
     align-items: center;
 }
+.nav-item input {
+    border-radius: 40px;
+}
 #dateRange {
     cursor: pointer;
-    border-radius: 40px;
     background: transparent;
 }
 .dropdown, .dropdown-center, .dropend, .dropstart, .dropup, .dropup-center {
@@ -258,6 +260,9 @@ form > div:last-of-type {
 /** PAGE COLLECTION **/
 section.item {
     width: 100%;
+}
+section.item h3 {
+    text-align: initial;
 }
 .collection-item {
     display: flex;

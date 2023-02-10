@@ -25,6 +25,7 @@ Encore
     .addEntry('script', './assets/js/script.js')
     .addEntry('form', './assets/js/form.js')
     .addEntry('lightpick', './assets/lightpick.js')
+    .addEntry('form_rooms', './assets/js/formRooms.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
