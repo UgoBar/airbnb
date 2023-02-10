@@ -24,6 +24,8 @@ class RoomType extends AbstractType
                 "label"=>false,
                 'allow_add' => true,
                 'allow_delete' => true,
+//                'prototype_data' => 'Hello'
+
 //                'entry_options' => [
 //                    'attr' => ['class' => 'email-box'],
 //                ],

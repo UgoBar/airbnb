@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Location{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block body %}
+
+    {% set now = "now"|date("d-m-Y") %}
+
+    {% if bookings|length > 0 %}
+        <h1>Mes réservations</h1>
+        <p>Retrouvez ici la liste de tous vos réservation</p>
+    {% else %}
+        <h1>Aucune réservation</h1>
+    {% endif %}
+
+    <div id="calendar"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
+
+    <script>
+
+        let route = "{{ path('api_calendar')}}";
+
+        let calendarEl = document.getElementById('calendar');
+
+        fetch(route)
+            .then(response => response.json())
+            .then(function(events) {
+                console.log(events);
+                let calendar = new FullCalendar.Calendar(calendarEl, {
+                    headerToolbar: {
+                        left: 'prevYear,prev,next,nextYear today',
+                        center: 'title',
+                        right: 'dayGridMonth'
+                    },
+                    validRange: { start: new Date },
+                    initialDate: new Date,
+                    navLinks: true, // can click day/week names to navigate views
+                    editable: true,
+                    dayMaxEvents: true, // allow "more" link when too many events
+                    events: events
+                });
+
+                calendar.render();
+            });
+    </script>
+
+{% endblock %}

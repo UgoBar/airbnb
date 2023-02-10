@@ -3,7 +3,7 @@
 let roomNbr = document.querySelectorAll('#rooms section').length;
 const rooms = document.getElementById('rooms');
 
-window.addRoom = function() {
+function addRoom() {
 
     const item = document.createElement('section');
 
@@ -18,14 +18,19 @@ window.addRoom = function() {
 
     rooms.dataset.index++;
 
+    document.querySelectorAll('.add_item').forEach(function(elem) {
+        elem.addEventListener('click', addFormToCollection)
+    })
+
     item.querySelector('.remove-item').addEventListener('click', function() {
         roomNbr--;
         item.remove();
     });
 }
 
-window.addFormToCollection = function(collection) {
+function addFormToCollection() {
 
+    const collection = this.closest(`div`).nextSibling.nextSibling;
     const item = document.createElement('div');
 
     item.innerHTML = collection.dataset.template.replaceAll('__name__', collection.dataset.index);
@@ -39,12 +44,19 @@ window.addFormToCollection = function(collection) {
     item.querySelector('.remove-item').addEventListener('click', removeItem);
 }
 
-document.querySelectorAll('.remove-item').forEach(function(elem) {
-    elem.addEventListener('click', removeItem)
-})
-
-window.removeItem = function(e) {
+function removeItem(e) {
     e.preventDefault()
     this.closest('.item').remove();
 }
+
+document.querySelectorAll('.remove-item').forEach(function(elem) {
+    elem.addEventListener('click', removeItem)
+})
+document.querySelectorAll('.add_item').forEach(function(elem) {
+    elem.addEventListener('click', addFormToCollection)
+})
+document.getElementById('addRoom').addEventListener('click', addRoom)
+
+
+
 

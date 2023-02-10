@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\ApiService;
+use App\Entity\Booking;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,17 +29,20 @@ class ApiController extends AbstractController
         return new JsonResponse('Aucune ville trouvée');
     }
 
-    #[Route('/api/get/location', name: 'app_search_location')]
-    public function searchLocation(Request $request)
+    #[Security("is_granted('ROLE_USER')")]
+    #[Route('/api/get/booking/', name: 'api_calendar')]
+    public function getCalendarBooking(BookingRepository $bookingRepository)
     {
-//        $dateRange =
-//        if()
+        $bookings = $bookingRepository->findBy(['user' => $this->getUser()]);
+        $events = [];
+        foreach ($bookings as $booking) {
+            $bookingEvent = [];
+            $bookingEvent['title'] = $booking->getLocation()->getName();
+            $bookingEvent['start'] = $booking->getStartAtEnFormat();
+            $bookingEvent['end'] = $booking->getEndAtEnFormat();
+            $events[] = $bookingEvent;
+        }
 
-        $params = [
-            'capacity' => $request->get('capacity') ?: 0,
-            'startAt'  => $request->get('dateRange') ?: null,
-            'endAt'    => $request->get('endAt') ?: null,
-            'city'     => $request->get('city') ?: null,
-        ];
+        return new JsonResponse($events);
     }
 }

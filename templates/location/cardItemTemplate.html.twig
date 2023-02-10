@@ -1,0 +1,27 @@
+<div id="room_collection_rooms___name__">
+    <div class="checkboxes">
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="checkbox" id="room_collection_rooms___name___hasBathroom" name="room_collection[rooms][__name__][hasBathroom]" class="form-check-input" value="1" />
+                <label class="form-check-label" for="room_collection_rooms___name___hasBathroom">Has bathroom</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="checkbox" id="room_collection_rooms___name___hasBalcony" name="room_collection[rooms][__name__][hasBalcony]" class="form-check-input" value="1" />
+                <label class="form-check-label" for="room_collection_rooms___name___hasBalcony">Has balcony</label>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+        <h5 class="mb-2">Ajouter des lits</h5>
+        <button class="btn btn-dark rounded add_item" type="button" data-collection-holder-class="roomBeds"><i class="fa-solid fa-plus"></i></button>
+    </div>
+
+    <div id="room_collection_rooms___name___roomBeds" data-template="&lt;fieldset class=&quot;&quot;&gt;&lt;div id=&quot;room_collection_rooms___name___roomBeds___name__&quot;&gt;&lt;div class=&quot;collection-form-div&quot;&gt;&lt;select id=&quot;room_collection_rooms___name___roomBeds___name___bed&quot; name=&quot;room_collection[rooms][__name__][roomBeds][__name__][bed]&quot; class=&quot;form-select&quot;&gt;&lt;option value=&quot;1&quot;&gt;King Size&lt;/option&gt;&lt;option value=&quot;2&quot;&gt;Single size&lt;/option&gt;&lt;option value=&quot;3&quot;&gt;Canapé lit&lt;/option&gt;&lt;/select&gt;        &lt;/div&gt;&lt;div class=&quot;form-floating collection-form-div&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;room_collection_rooms___name___roomBeds___name___quantity&quot; name=&quot;room_collection[rooms][__name__][roomBeds][__name__][quantity]&quot; required=&quot;required&quot; placeholder=&quot;Nombre de lits&quot; inputmode=&quot;decimal&quot; class=&quot;form-control&quot; /&gt;&lt;label for=&quot;room_collection_rooms___name___roomBeds___name___quantity&quot; class=&quot;form-label required&quot;&gt;Nombre de lits&lt;/label&gt;        &lt;/div&gt;&lt;/div&gt;        &lt;/fieldset&gt;">
+    </div>
+
+</div>
+<a class="btn text-danger rounded remove-item" href="#">
+    <i class="fa-solid fa-trash"></i>
+</a>

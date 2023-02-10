@@ -15,13 +15,13 @@ class Booking
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $startDateAt = null;
+    private ?\DateTime $startDateAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $endDateAt = null;
+    private ?\DateTime $endDateAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
 
     #[ORM\Column]
     private ?int $quantityTraveller = null;
@@ -42,36 +42,45 @@ class Booking
         return $this->id;
     }
 
-    public function getStartDateAt(): ?\DateTimeImmutable
+    public function getStartDateAt(): ?string
     {
-        return $this->startDateAt;
+        return $this->startDateAt->format('d-m-Y');
     }
 
-    public function setStartDateAt(\DateTimeImmutable $startDateAt): self
+    public function getStartAtEnFormat(): ?string
+    {
+        return $this->startDateAt->format('Y-m-d');
+    }
+    public function getEndAtEnFormat(): ?string
+    {
+        return $this->endDateAt->format('Y-m-d');
+    }
+
+    public function setStartDateAt(\DateTime $startDateAt): self
     {
         $this->startDateAt = $startDateAt;
 
         return $this;
     }
 
-    public function getEndDateAt(): ?\DateTimeImmutable
+    public function getEndDateAt(): ?string
     {
-        return $this->endDateAt;
+        return $this->endDateAt->format('d-m-Y');
     }
 
-    public function setEndDateAt(\DateTimeImmutable $endDateAt): self
+    public function setEndDateAt(\DateTime $endDateAt): self
     {
         $this->endDateAt = $endDateAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

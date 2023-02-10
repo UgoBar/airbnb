@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add Apartment{% endblock %}
+{% block title %}Reservation{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,14 +12,13 @@
 {% endblock %}
 
 {% block main_content %}
-
     <div class="banner">
-        <img src="{{ bannerImg }}" alt="">
-        <h1 class="location-form-title">Ajouter votre {{ locationType }}</h1>
+        <img src="{{ location.picture }}" alt="">
+        <h1 class="location-form-title">Récapitulatif : {{ location.name }}</h1>
     </div>
 
-    <div class="form">
 
+    <div class="form form-booking">
         {{ form_start(form) }}
         {{ form_end(form) }}
     </div>
@@ -29,6 +28,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-
     {{ encore_entry_script_tags('form') }}
 {% endblock %}

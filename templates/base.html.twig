@@ -29,20 +29,23 @@
     </div>
 {% endblock %}
 
-
 {% block javascripts %}
 
     {{ encore_entry_script_tags('app') }}
     {{ encore_entry_script_tags('script') }}
+    {{ encore_entry_script_tags('form') }}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="{{ asset('js/lightpick.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+        const apiURL = '{{ path('app_api_get_city') }}';
+
         let picker = new Lightpick({
             field: document.getElementById('dateRange'),
             singleDate: false,
-            minDate: moment().startOf('month').add(7, 'day'),
+            minDate: moment(),
             // maxDate: moment().endOf('month').subtract(7, 'day'),
             onSelect: function(start, end){
                 var str = '';
@@ -54,15 +57,18 @@
 
         // Navbar input number custom
         const fakeInputNumber = document.getElementById('travellerNumber');
+        const inputHidden = document.querySelector('.input-number input');
         let fakeInputValue = +document.getElementById('travellerNumber').innerText;
-        function increment(){
-            fakeInputValue++
-            fakeInputNumber.innerText = fakeInputValue;
+        function increment() {
+            fakeInputValue++;
+            fakeInputNumber.innerText = fakeInputValue.toString();
+            inputHidden.value = fakeInputValue;
         }
-        function decrement(){
+        function decrement() {
             if(fakeInputValue >= 1) {
-                fakeInputValue--
-                fakeInputNumber.innerText = fakeInputValue;
+                fakeInputValue--;
+                fakeInputNumber.innerText = fakeInputValue.toString();
+                inputHidden.value = fakeInputValue;
             }
         }
     </script>

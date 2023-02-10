@@ -28,7 +28,6 @@
     border: 1px solid #acafb1;
     border-radius: 21px;
 }
-
 .dropdown-toggle::after {
     display: none;
 }
@@ -53,7 +52,13 @@
 .dropdown-item, .dropdown-item:hover {
     color: #303030;
 }
-
+button.nav-link {
+    background: transparent;
+    border: unset;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+}
 
 body {
     margin-top: 100px;
@@ -73,7 +78,7 @@ h3 {
 }
 
 .btn-red {
-    border: 1px solid #ff5d62;
+    border: 2px solid #ff5d62;
     font-size: 20px;
     border-radius: 21px;
 }
@@ -313,4 +318,53 @@ section.item h3 {
 }
 .collection-item fieldset > div {
     display: flex;
+}
+
+
+.reservation-list {
+    width: 48%;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.18);
+    margin: 10px;
+    display: flex;
+    padding-left: 0;
+    flex-direction: initial;
+    position: relative;
+}
+.reservation-list figure {
+    height: auto;
+    width: 35%;
+    margin-bottom: 0;
+}
+.right-part {
+    width: 65%;
+    text-align: initial;
+    padding-left: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+.reservation-list .btn.btn-dark.rounded {
+    right: 0;
+    top: 0;
+}
+.reservation-list .btn-red {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+.reservation-list .badge {
+    margin: 0 0 20px 0;
+}
+.form-booking form > div {
+    width: 44% !important;
+}
+.form-booking form > div:last-of-type {
+    width: 100% !important;
+    text-align: center;
+    margin-top: 2em;
+    margin-left: auto;
+}
+.dates {
+    margin: 10px auto 2em auto;
 }

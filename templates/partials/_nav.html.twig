@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg text-uppercase fixed-top" id="mainNav" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg text-uppercase fixed-top bg-white" id="mainNav" data-bs-theme="dark">
     <div class="container">
         <a class="navbar-brand" href="{{ path('app_home') }}">
             <img src="{{ asset('img/logo.png') }}" alt="" style="width: 102px">
@@ -7,25 +7,25 @@
             Menu
             <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <form class="collapse navbar-collapse" id="navbarResponsive" action="{{ path('app_search_location') }}">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center pe-3">
-                    <i class="fa-solid fa-map-location-dot pe-2"></i> <input type="text" name="where" class="form-control form-control-sm" placeholder="Destination">
+                <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center pe-3 city-search">
+                    <i class="fa-solid fa-map-location-dot pe-2" id="destination"></i> <input type="text" name="where" class="form-control form-control-sm" placeholder="Destination" data-icon="destination">
                 </li>
                 <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center pe-3">
-                    <i class="fa-solid fa-users pe-2"></i>
+                    <i class="fa-solid fa-users pe-2" id="travellerIcon"></i>
                     <div class="input-number">
                         <button type="button" onclick="decrement()" >&minus;</button>
                         <span id="travellerNumber">0</span>
-                        <input type="hidden" name="travellerNumber">
+                        <input type="hidden" name="travellerNumber" data-icon="travellerIcon">
                         <button type="button" onclick="increment()">&#43;</button>
                     </div>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1 d-flex align-items-center">
-                    <i class="fa-regular fa-calendar pe-2"></i> <input type="text" id="dateRange" name="dateRange" class="form-control form-control-sm" placeholder="Select a date">
+                    <i class="fa-regular fa-calendar pe-2" id="dates"></i> <input type="text" id="dateRange" name="dateRange" class="form-control form-control-sm" placeholder="Select a date" data-icon="dates">
                 </li>
                 <li class="nav-item mx-0 mx-lg-1 pe-5">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Rechercher</a>
+                    <button type="submit" class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Rechercher</button>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -38,12 +38,13 @@
                             <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_add_location') }}">Ajouter un logement</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_list_my_location') }}">Mes logements</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_my_bookings') }}">Mes Réservation</a></li>
                         {% else %}
                             <li><a class="dropdown-item" href="{{ path('app_login') }}">Login</a></li>
                         {% endif %}
                     </ul>
                 </li>
             </ul>
-        </div>
+        </form>
     </div>
 </nav>

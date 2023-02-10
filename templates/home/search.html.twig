@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Location{% endblock %}
+
+{% block body %}
+
+    {% if locations|length > 0 %}
+    <h1>Résultats</h1>
+    <p>Retrouvez ici la liste de tous les logements correspondant aux critères</p>
+    {% else %}
+    <h1>Aucun Résultat</h1>
+    {% endif %}
+
+    <div class="row">
+        {% for location in locations %}
+            {% set dist = location['dist'] %}
+            {% set location = location[0] %}
+            <div class="card card-list reservation-list">
+                <figure>
+                    <img src="{{ location.picture }}" alt="">
+                </figure>
+                <div class="right-part">
+                    <h2 class="mb-0">{{ location.name }}</h2>
+                    {% if dist|number_format(0) > 0 %}
+                        <p class="mb-0">Distance : {{ dist|number_format(0) }} km</p>
+                    {% endif %}
+                    <span class="badge rounded-pill bg-success">Disponible</span>
+                    <div>{{ location.description | raw }}</div>
+                    <a class="btn btn-red" href="#" data-href="{{ path('app_book_location', {'id':location.id, 'dateRange': app.request.get('dateRange'), 'travellerNumber': app.request.get('travellerNumber')}) }}" onclick="bookLocation(this, '{{ location.name }}')">Réserver</a>
+                </div>
+                <span class="btn btn-dark rounded"><i class="fa-solid fa-person-walking-luggage"></i>{{ location.capacity }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        function bookLocation(elem, locationName) {
+            Swal.fire({
+                html: `<p class="">Vous êtes sur le point de confirmer la réservation de ce logement :</p> <p class="mb-0 fw-bold">${locationName} !</p>`,
+                showCancelButton: true,
+                confirmButtonText: 'On y va!',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    window.location.replace(elem.dataset.href);
+                }
+            })
+        }
+    </script>
+{% endblock %}

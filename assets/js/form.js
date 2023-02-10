@@ -37,14 +37,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
 
     /** -------- AUTO COMPLETE -------- **/
-    if(document.querySelector("#city input")) {
-        const cityInput = document.querySelector("#city input")
+    if(document.querySelector("#city input") || document.querySelector(".city-search input")) {
+
+        const cityInput = document.querySelector("#city input") || document.querySelector(".city-search input")
         const datalist = document.createElement("datalist")
 
         datalist.id = "cityList";
         cityInput.parentElement.append(datalist);
 
-// Listener on city input
+        // Listener on city input
         cityInput.addEventListener("input", function() {
             cityInput.setAttribute('list', 'cityList')
             if(cityInput.value.length > 2) {
@@ -62,36 +63,37 @@ document.addEventListener('DOMContentLoaded', (e) => {
             }
         })
 
-        document.querySelector('.btn.btn-red').addEventListener('click', () => {
-            document.querySelector('form').submit();
-        })
+        if( document.querySelector('form .btn.btn-red')) {
+            document.querySelector('.btn.btn-red').addEventListener('click', () => {
+                document.querySelector('form').submit();
+            })
+        }
     }
     /** -------- END AUTO COMPLETE -------- **/
 
 
-    /** -------- FORM COLLECTION -------- **/
-    // if(document.querySelector('.add_item')) {
-    //
-    //     // const roomBeds = document.getElementById('roomBeds');
-    //     const addBed = document.getElementById('addBed');
-    //
-    //     function addFormToCollection(roomBedsId) {
-    //         const roomBeds = document.getElementById(roomBedsId);
-    //         const item = document.createElement('div');
-    //
-    //         item.innerHTML = roomBeds.dataset.template.replaceAll('__name__', roomBeds.dataset.index);
-    //
-    //         item.classList.add('collection-item');
-    //
-    //         roomBeds.appendChild(item);
-    //         roomBeds.dataset.index++;
-    //
-    //         item.querySelector('.remove-item').addEventListener('click', (e) => {
-    //             item.remove();
-    //         });
-    //     }
-    //
-    //     addBed.addEventListener('click', addFormToCollection);
-    // }
-    /** -------- END FORM COLLECTION -------- **/
+    /** -------- FORM SEARCH BAR -------- **/
+    if(document.querySelector('form#navbarResponsive')) {
+        const navbarForm = document.querySelector('form#navbarResponsive');
+        const navbarInputs = navbarForm.querySelectorAll('input');
+
+        navbarForm.addEventListener('submit', function(e) {
+
+            // Check if inputs are hydrated
+            navbarInputs.forEach(function(input) {
+                if(input.value === '' || input.value === '0') {
+                    document.getElementById(input.dataset.icon).classList.add('text-danger')
+                } else {
+                    document.getElementById(input.dataset.icon).classList.remove('text-danger');
+                }
+            })
+
+            let errorCount = navbarForm.querySelectorAll('.text-danger').length;
+
+            if(errorCount > 0) {
+                e.preventDefault();
+            }
+        })
+    }
+    /** -------- END FORM SEARCH BAR -------- **/
 })

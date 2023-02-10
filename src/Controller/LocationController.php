@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Apartment;
 use App\Entity\Boat;
+use App\Entity\Booking;
 use App\Entity\House;
 use App\Entity\Location;
 use App\Entity\Room;
@@ -55,9 +56,6 @@ class LocationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            foreach($form->getData()->getroomBeds() as $roomBed) {
-//                $roomBed->setRoom($room);
-//            }
 
             $entityManager->persist($location);
             $entityManager->flush();
@@ -168,32 +166,10 @@ class LocationController extends AbstractController
             $bannerImg = $location->getPicture() ?: 'https://a0.muscache.com/im/pictures/e8b004b9-1cf0-48fe-a7e1-085afdc19010.jpg?im_w=2560';
         }
 
-
         $form = $this->createForm($formType, $location);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-//            // Update room number
-//            if($location->getNbrRoom() != count($form->getData()->getNbrRoom())) {
-//                // More ?
-//                if($location->getNbrRoom() < count($form->getData()->getNbrRoom())) {
-//                    $diff = count($form->getData()->getNbrRoom()) - $location->getNbrRoom();
-//                    // Add X rooms
-//                    for($i = 0; $i < $diff; $i++) {
-//                        $room = new Room();
-//                        $room->setLocation($location);
-//                        $room->setHasBalcony(0);
-//                        $room->setHasBathroom(0);
-//                        $entityManager->persist($room);
-//                    }
-//                } else {  // Less ?
-//                    $diff = $location->getNbrRoom() - count($form->getData()->getNbrRoom());
-//                    // Delete X rooms
-//
-//                }
-//
-//            }
 
             $entityManager->persist($location);
             $entityManager->flush();

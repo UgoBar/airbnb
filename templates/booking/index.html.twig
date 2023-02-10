@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Location{% endblock %}
+
+{% block body %}
+
+    {% set now = "now"|date("d-m-Y") %}
+
+    {% if bookings|length > 0 %}
+        <h1>Mes réservations</h1>
+        <p>Retrouvez ici la liste de tous vos réservation</p>
+        <a class="btn btn-red" href="{{ path('app_my_bookings_calendar') }}">Calendrier</a>
+    {% else %}
+        <h1>Aucune réservation</h1>
+    {% endif %}
+
+    <div class="row">
+        {% for booking in bookings %}
+            <div class="card card-list">
+                <figure>
+                    <img src="{{ booking.location.picture }}" alt="">
+                </figure>
+                <h2>{{ booking.location.name }}</h2>
+
+                {% if booking.endDateAt < now %}
+                    <span class="badge rounded-pill bg-secondary">Fini</span>
+                {% elseif booking.startDateAt >= now and now <= booking.endDateAt %}
+                    <span class="badge rounded-pill bg-success">En cours</span>
+                {% elseif booking.startDateAt > now %}
+                    <span class="badge rounded-pill bg-warning">A venir</span>
+                {% endif %}
+                <div class="dates">
+                    <span class="btn btn-dark">{{ booking.startDateAt }}</span>
+                    -
+                    <span class="btn btn-dark">{{ booking.endDateAt }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{#{% block javascripts %}#}
+{#    {{ parent() }}#}
+{#{% endblock %}#}
