@@ -6,7 +6,8 @@
 }
 #dateRange {
     cursor: pointer;
-    border-radius: 40px
+    border-radius: 40px;
+    background: transparent;
 }
 .dropdown, .dropdown-center, .dropend, .dropstart, .dropup, .dropup-center {
     position: relative;
@@ -117,16 +118,22 @@ h3 {
 form {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 form > div {
     width: 44%;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
 }
 form>div:nth-of-type(3), form>div:nth-of-type(2) {
     width: 100%;
 }
 form>div:nth-of-type(10), form>div:nth-of-type(11), form>div:nth-of-type(12) {
     width: 100%;
+}
+form > div:last-of-type {
+    width: 100%;
+    text-align: end;
+    margin-top: 2em;
 }
 .form-floating {
     margin-bottom: 1rem !important;
@@ -295,4 +302,10 @@ section.item {
     position: absolute;
     top: 0;
     right: 0;
+}
+.collection-item fieldset {
+    width: 80%;
+}
+.collection-item fieldset > div {
+    display: flex;
 }

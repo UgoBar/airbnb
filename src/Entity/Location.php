@@ -57,7 +57,7 @@ class Location
     #[ORM\Column(length: 400, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Room::class)]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Room::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $rooms;
 
     public function getClassName(){

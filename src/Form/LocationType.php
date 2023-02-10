@@ -120,6 +120,7 @@ class LocationType extends AbstractType
 
         if($location->getId()){
             $form->remove('address');
+            $form->remove('nbrRoom');
         }
     }
 

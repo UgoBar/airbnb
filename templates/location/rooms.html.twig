@@ -27,9 +27,38 @@
 
         {{ form_start(form) }}
 
+        {% set dataTemplate = '
+            <div id="room_collection_rooms___name__">
+              <div class="checkboxes">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" id="room_collection_rooms___name___hasBathroom" name="room_collection[rooms][__name__][hasBathroom]" class="form-check-input" value="1" />
+                    <label class="form-check-label" for="room_collection_rooms___name___hasBathroom">Has bathroom</label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" id="room_collection_rooms___name___hasBalcony" name="room_collection[rooms][__name__][hasBalcony]" class="form-check-input" value="1" />
+                    <label class="form-check-label" for="room_collection_rooms___name___hasBalcony">Has balcony</label>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <h5 class="mb-2">Ajouter des lits</h5>
+                <button class="btn btn-dark rounded add_item" type="button" onclick="addFormToCollection(this.closest(`div`).nextSibling.nextSibling)" data-collection-holder-class="roomBeds"><i class="fa-solid fa-plus"></i></button>
+              </div>
+
+              <div id="room_collection_rooms___name___roomBeds" data-template="&lt;fieldset class=&quot;mb-3&quot;&gt;&lt;div id=&quot;room_collection_rooms___name___roomBeds___name__&quot;&gt;&lt;div class=&quot;collection-form-div&quot;&gt;&lt;select id=&quot;room_collection_rooms___name___roomBeds___name___bed&quot; name=&quot;room_collection[rooms][__name__][roomBeds][__name__][bed]&quot; class=&quot;form-select&quot;&gt;&lt;option value=&quot;1&quot;&gt;King Size&lt;/option&gt;&lt;option value=&quot;2&quot;&gt;Single size&lt;/option&gt;&lt;option value=&quot;3&quot;&gt;Canapé lit&lt;/option&gt;&lt;/select&gt;        &lt;/div&gt;&lt;div class=&quot;form-floating collection-form-div&quot;&gt;&lt;input type=&quot;text&quot; id=&quot;room_collection_rooms___name___roomBeds___name___quantity&quot; name=&quot;room_collection[rooms][__name__][roomBeds][__name__][quantity]&quot; required=&quot;required&quot; placeholder=&quot;Nombre de lits&quot; inputmode=&quot;decimal&quot; class=&quot;form-control&quot; /&gt;&lt;label for=&quot;room_collection_rooms___name___roomBeds___name___quantity&quot; class=&quot;form-label required&quot;&gt;Nombre de lits&lt;/label&gt;        &lt;/div&gt;&lt;/div&gt;        &lt;/fieldset&gt;">
+              </div>
+
+            </div>
+            <a class="btn text-danger rounded remove-item" href="#">
+              <i class="fa-solid fa-trash"></i>
+            </a>'
+        %}
         <div class="rooms" id="rooms"
              data-index="{{ form.rooms|length > 0 ? form.rooms|last.vars.name + 1 : 0 }}"
-             data-template='{{ form_widget(form.rooms.vars.prototype)|e }} <a class="btn text-danger rounded remove-item" href="#"><i class="fa-solid fa-trash"></i></a>'>
+             data-template='{{ dataTemplate|e('html_attr') }} '>
             {% for room in form.rooms %}
                 <section class="card item">
                     <h3 class="mb-4">Chambre <span class="roomNumber">{{ loop.index }}</span></h3>
@@ -43,7 +72,7 @@
                     </div>
                     <div class="roomBeds"
                          data-index="{{ room.roomBeds|length > 0 ? room.roomBeds|last.vars.name + 1 : 0 }}"
-                         data-template='{{ form_widget(room.roomBeds.vars.prototype) }} <a class="btn btn-dark rounded remove-item" href="#"><i class="fa-solid fa-minus"></i></a>'>
+                         data-template='{{ form_widget(room.roomBeds.vars.prototype) }}'>
                         {% for roomBed in room.roomBeds %}
                             <div class="collection-item item">
                                 <div>
@@ -58,7 +87,7 @@
                 </section>
             {% endfor %}
         </div>
-        <button class="btn btn-dark add_item" type="button" onclick="addRoom()" data-collection-holder-class="rooms"><i class="fa-solid fa-plus"></i> Ajouter une chambre</button>
+        <button class="btn btn-dark add_item d-block w-100 mb-4" type="button" onclick="addRoom()" data-collection-holder-class="rooms"><i class="fa-solid fa-plus"></i> Ajouter une chambre</button>
         <button type="submit" class="btn btn-red ms-auto">Enregistrer</button>
         {{ form_widget(form._token) }}
         {{ form_end(form, {'render_rest': false}) }}
@@ -73,21 +102,28 @@
     <script>
         let roomNbr = document.querySelectorAll('#rooms section').length;
 
+        // Retrieve a children collection data-template
+        const rooms = document.getElementById('rooms');
+        // Set this data into
+
         function addRoom() {
-            const rooms = document.getElementById('rooms');
+
             const item = document.createElement('section');
 
             roomNbr++
 
-            item.classList.add('card');
+            item.classList.add('card', 'item');
             item.innerHTML = `
-                <h3 class="mb-4">Chambre ${roomNbr.toString()}</h3>
-                ${rooms.dataset.template.replaceAll('__name__', rooms.dataset.index)}
+                <h3 class="mb-4">Chambre <span class="roomNumber">${roomNbr}</span></h3>
             `
+            // item.innerHTML += rooms.dataset.template.replaceAll('__name__', rooms.dataset.index);
+            item.innerHTML += rooms.dataset.template.replaceAll('__name__', rooms.dataset.index);
             rooms.appendChild(item);
+
             rooms.dataset.index++;
 
             item.querySelector('.remove-item').addEventListener('click', function() {
+                roomNbr--;
                 item.remove();
             });
         }
@@ -97,6 +133,7 @@
             const item = document.createElement('div');
 
             item.innerHTML = collection.dataset.template.replaceAll('__name__', collection.dataset.index);
+            item.innerHTML += `<a class="btn btn-dark rounded remove-item" href="#"><i class="fa-solid fa-minus"></i></a>`
 
             item.classList.add('collection-item', 'item');
 
@@ -110,8 +147,9 @@
             elem.addEventListener('click', removeItem)
         })
 
-        function removeItem() {
-            this.closest('.item').remove()
+        function removeItem(e) {
+            e.preventDefault()
+            this.closest('.item').remove();
         }
 
     </script>
